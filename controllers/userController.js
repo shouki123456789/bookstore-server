@@ -42,8 +42,8 @@ exports.loginController = async(req,res)=>{
             
             if(password == existingUser.password){
                 
-                const tocken = jwt.sign({userMail:existingUser.email, role:existingUser.role},process.env.JWTSECRET)
-                res.status(200).json({user:existingUser,tocken})
+                const token = jwt.sign({userMail:existingUser.email, role:existingUser.role},process.env.JWTSECRET)
+                res.status(200).json({user:existingUser,token})
 
             }else{
                 
@@ -65,6 +65,37 @@ exports.loginController = async(req,res)=>{
     
 }
 
+//google login
+exports.googleLoginController = async(req,res)=>{
+    console.log("inside login googleLogincontroller");
+    const {email,password,username,picture} = req.body
+    try{
+        
+        const existingUser = await users.findOne({email})
+        if(existingUser){
+           
+                
+                const token = jwt.sign({userMail:existingUser.email, role:existingUser.role},process.env.JWTSECRET)
+                res.status(200).json({user:existingUser,token})
+        }else{
+            
+                const newUser = await users.create({
+                username,email,password,picture
+            })
+
+            const token = jwt.sign({userMail:newUser.email, role:newUser.role},process.env.JWTSECRET)
+                res.status(200).json({user:newUser,token})
+        }
+        
+
+    }catch(error){
+    
+        console.log(error);
+        res.status(500).json(error)
+    
+    }
+    
+}
 
 
 //user profile edit
