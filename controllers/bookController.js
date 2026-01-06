@@ -48,3 +48,62 @@ exports.getHomeBookController = async (req,res)=>{
     
    
 }
+
+
+
+//get all books - for authorised user(exept his own book)
+
+exports.getUserAllBooksController =async (req,res)=>{
+    console.log("inside getUserAllbooksController");
+     const searchKey = req.query.search
+     console.log(searchKey);
+     
+
+    const loginUserMail = req.payload
+    try{
+       const allBooks = await books.find({sellerMail:{$ne:loginUserMail},title:{$regex:searchKey,$options:'i'}})
+       res.status(200).json(allBooks)
+    }catch(error){
+        console.log(error)
+        res.status(500).json(error)
+    }
+    
+}
+
+
+
+//get userupload books-authorised user(for book status component in profile)
+
+exports.getUserProfileBooksController = async(req,res) =>{
+    console.log("inside getUserUploadProfileBooksController");
+    const loginUserMail =req.payload
+    try{
+        const userBooks = await books.find({sellerMail:loginUserMail})
+        res.status(200).json(userBooks)
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+        
+    }
+    
+
+}
+
+
+//purchase
+exports.getUserBoughtBooksController = async(req,res) =>{
+    console.log("inside getUserUploadProfileBooksController");
+    const loginUserMail =req.payload
+    try{
+        const userBooks = await books.find({buyerMail:loginUserMail})
+        res.status(200).json(userBooks)
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error)
+        
+    }
+    
+
+}

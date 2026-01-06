@@ -21,7 +21,18 @@ router.get('/home/books',bookController.getHomeBookController)
 
 //----------------------Authorised user-------------------
 
-
+//----------------------role:user-------------------------
 //add book
 router.post('/user/add/book',jwtMiddleware,multerMiddleware.array('uploadImg',3),bookController.addBookController)
+
+
+router.get('/home/books',bookController.getHomeBookController)
+
+//allbook for loggined user
+
+router.get('/all-books',jwtMiddleware,bookController.getUserAllBooksController)
+
+router.get('/user-books',jwtMiddleware,bookController.getUserProfileBooksController)
+
+router.get('/user-books/bought',jwtMiddleware,bookController.getUserBoughtBooksController)
 module.exports = router
