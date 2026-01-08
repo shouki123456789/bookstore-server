@@ -12,6 +12,8 @@ bookstoreServer.use(express.json())
 //use router in server app
 bookstoreServer.use(router)
 
+bookstoreServer.use('/uploads', express.static('./uploads'))
+
 const PORT = 3000
 
 bookstoreServer.listen(PORT,()=>{
