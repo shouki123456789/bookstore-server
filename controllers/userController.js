@@ -125,4 +125,18 @@ exports.userProfileUpdateController = async(req,res)=>{
 }
 
 
+//all users for admin collection page
+exports.allUserContoller =async(req,res)=>{
+    console.log("inside allUserController")
+    try{
+        const allUsers = await users.find({role:{$ne:"admin"}})
+        res.status(200).json(allUsers)
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json(err)
+        
+    }
+}
+
 //admin profile edit

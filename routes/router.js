@@ -3,6 +3,7 @@ const userController = require('../controllers/userController')
 const bookController  = require('../controllers/bookController')
 const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const multerMiddleware = require('../middlewares/multerMiddleware')
+const adminMiddleware = require('../middlewares/adminMiddleware')
 const router = new express.Router()
 
 
@@ -42,5 +43,13 @@ router.get('/books/:id/view',jwtMiddleware,bookController.viewBookController)
 
 
 router.put('/user/:id/edit',jwtMiddleware,multerMiddleware.single('picture'),userController.userProfileUpdateController)
+
+
+
+router.get('/books/all', adminMiddleware,bookController.getAllBookController)
+
+router.get('/users/all', adminMiddleware,userController.allUserContoller)
+
+router.put('/books/:id/update', adminMiddleware,bookController.updateBookStatusController)
 
 module.exports = router
