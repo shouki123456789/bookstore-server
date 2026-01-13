@@ -36,6 +36,11 @@ router.get('/all-books',jwtMiddleware,bookController.getUserAllBooksController)
 router.get('/user-books',jwtMiddleware,bookController.getUserProfileBooksController)
 
 router.get('/user-books/bought',jwtMiddleware,bookController.getUserBoughtBooksController)
+//buy book - payment related
+router.put('/books/:id/buy',jwtMiddleware,bookController.bookPaymentController)
+
+
+router.delete('/books/:id',jwtMiddleware,bookController.deleteBookController)
 
 
 
